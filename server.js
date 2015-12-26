@@ -2,25 +2,16 @@
 var express = require('express');
 var app = express();
 var PORT = 3000;
+/* Includes our middleware.js file we have set up to be exported */
+var middleware = require('./middleware.js');
 
 // app.get('/', function(request, response) {
 // 	response.send("Hello Express!");
 // });
 
-/* A variable that basically stores a bunch of function for our middleware. */
-var middleware = {
-	requireAuthentication: function(request, response, next) {
-		console.log("Private route hit");
-		next();
-	},
-	logger: function(request, response, next) {
-		console.log("REQUEST:" + request.method + '' + request.originalUrl + " at " + new Date().toString());
-		next();
-	}
-}
 /* This is an application middleware. It is applied to all routes in our webapp */
 //app.use(middleware.requireAuthentication);
-//app.use(middleware.logger);
+app.use(middleware.logger);
 
 /* This is an example where middleware is route specific. */
 app.get('/about', middleware.requireAuthentication, function(request, response){
@@ -32,7 +23,7 @@ app.get('/about', middleware.requireAuthentication, function(request, response){
 // 	response.send("About us!");
 // });
 
-/* Includes the public folder in our project */ 
+/* Includes the "public" folder in our project */ 
 app.use(express.static(__dirname + '/public'));
 
 /* Which port will be emitting our express/node app */
