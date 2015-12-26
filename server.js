@@ -1,7 +1,7 @@
 /* Express is a js module that makes webservers super easy */
 var express = require('express');
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 /* Includes our middleware.js file we have set up to be exported */
 var middleware = require('./middleware.js');
 
